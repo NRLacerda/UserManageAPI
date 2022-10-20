@@ -20,7 +20,7 @@ app.get("/usuarios", function (req, res) {
 		if (err) {
 			res.send("error", err);
 		} else {
-			res.send(rows);
+			res.status(200).send(rows);
 		}
 	});
 });
@@ -28,10 +28,10 @@ app.get("/usuarios", function (req, res) {
 app.get("/usuarios/:id_usuario", function (req, res) {
 	conn.query("SELECT * FROM usuarios where id_usuario=" + req.params.id_usuario,
 		function (err, rows) {
-			if (err) {
-				res.send("error", err)
+			if (isNaN(req.params.id_usuario)) {
+				res.status(400).send("400 - Erro, NaN!")
 			} else {
-                res.send(rows)			
+                res.status(200).send(rows)			
             }
 		}
 	);
