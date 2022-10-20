@@ -17,8 +17,8 @@ module.exports = conn
 
 /*
 Tabelas:
-
-  CREATE TABLE usuarios( 
+    -----------
+    CREATE TABLE usuarios( 
     id_usuario int primary key AUTO_INCREMENT,
     nome varchar(255) NOT NULL,
     sobrenome varchar(255) NOT NULL,
@@ -26,6 +26,7 @@ Tabelas:
     telefone varchar (45) NOT NULL,
     cpf varchar (45) NOT NULL
 );
+    -----------
 CREATE TABLE enderecos_usuarios( 
     id_endereco_usuario int primary key AUTO_INCREMENT,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario),
