@@ -1,4 +1,6 @@
-STENNG DB
+<h1>STENNG - BACKEND PROVA</h1>
+<h3>Por Nicolas Rocha Lacerda</h3>
+
 1- Para utilizar a aplicação, tenha em sua máquina o MySQL com as seguintes configurações>
 user: 'root',
 password:'@n1Mseguranza',
@@ -27,8 +29,9 @@ Após instalação e configuração, crie as seguinte tabelas no MySQL>
         uf varchar (2) NOT NULL,
         cep varchar (45) NOT NULL,
         bairro varchar (255) NOT NULL,
-        complemento varchar 
-);
+        complemento varchar (255)
+        );
 
 2- Na pasta raiz do app, execute o comando "npm install" para instalar os pacotes.
+
 3- Após isso execute o comando "node index.js" para executar a aplicação, que deve estar disponível e printar no console "Server running! Database connected" e estar disponível em "localhost:4242"
