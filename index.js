@@ -41,9 +41,9 @@ app.delete("/delusuarios/:id_usuario", function (req, res) {
     var sql = "DELETE * FROM usuarios where id_usuario="
 	conn.query(sql + req.params.id_usuario,function (err, rows) {
 			if (err) {
-				res.send("error", err)
+				res.status(400).send("error", err)
 			} else {
-				res.send(rows + "deletado com sucesso");
+				res.status(299).send(rows + "deleted");
 			}
 		}
 	);
