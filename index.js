@@ -52,13 +52,8 @@ app.get("/", function (req, res) {
 	"Codigo:200\nStatus:Sucesso! \n Mensagem:Acao realizada com sucesso!"
 	);
 });
-app.get("/", function (req, res) {
-	res.status(404).send(
-			"Codigo:400\nStatus:Erro! \n Mensagem:Acao nao realizada com sucesso!"
-	);
-});
 app.listen(4242, function () {
-	console.log("server running!");
+	console.log("Server running!");
 });
 
 /*
