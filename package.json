@@ -1,0 +1,15 @@
+{
+  "name": "stenng",
+  "version": "1.0.0",
+  "description": "Project for an interview",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nicolas Rocha Lacerda",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql2": "^2.3.3"
+  }
+}
