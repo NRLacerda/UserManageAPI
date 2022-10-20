@@ -7,19 +7,28 @@ True is represented in the form of 1 and false is represented as 0.
 */
 
 const express = require("express");
-//const connection = require("./models/db")
+const connection = require("./models/db")
 const app = express();
 
 // Exibe todos usuários cadastrados
-/*app.get('/usuarios', function(req,res){
+app.get('/usuarios', function(req,res){
     connection.query('SELECT * FROM usuarios', function(err, rows){
         if(err){
-            res.flash('error',err)
+            res.send('error',err)
+        }else{
+            console.log(rows)
         }
     })
-})*/
+})
+
 app.get('/usuarios/:id_usuario', function(req,res){
-    res.send('<h1>'+ req.params.id_usuario+'</h1>')
+    connection.query('SELECT * FROM usuarios where id_usuario='+req.params.id_usuario, function(err, rows){
+        if(err){
+            res.status(status).send.body
+        }else{
+            console.log(rows)
+        }
+    })
 });
 
 // Envia statuscode
