@@ -41,7 +41,7 @@ app.delete("/usuarios/:id_usuario", function (req, res) {
 			if (err) {
 				res.status(400).send("error", err)
 			} else {
-				res.status(299).send(rows + "deleted");
+				res.status(299).send(req.params.id_usuario + " deleted");
 			}
 		}
 	);
