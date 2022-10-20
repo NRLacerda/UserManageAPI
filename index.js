@@ -7,7 +7,24 @@ True is represented in the form of 1 and false is represented as 0.
 */
 
 const express = require("express");
+const connection = require("./models/db")
 const app = express();
+
+// Exibe todos usuários cadastrados
+app.get('/usuarios', function(req,res){
+    connection.query('SELECT * FROM usuarios', function(err, rows){
+        if(err){
+            res.flash('error',err)
+        }
+    })
+})
+app.get('/usuarios/:id_usuario', function(req,res){
+    return res.json({
+        message: 'Olá ${req.params.id_usuario}'
+    })
+})
+
+
 
 // Envia statuscode
 app.get('/', function (req, res) {
@@ -17,6 +34,6 @@ app.get('/', function (req, res) {
     res.status(404).send('Codigo:400\nStatus:Erro! \n Mensagem:Acao nao realizada com sucesso!')  
 });
 
-app.listen(80, function () {
+app.listen(4242, function () {
 	console.log("server running!");
 });

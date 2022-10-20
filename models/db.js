@@ -1,9 +1,23 @@
-const connection = mysql.createConnection({
+var mysql = require('mysql2')
+var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
+    password:'',
     database: 'stenngdb'
   });
+
+connection.connect((err) => {
+    if (err) {
+      console.log(err)
+      return
+    }
+    console.log('Database connected')
+  })
+module.exports = connection
+
 /*
+Tabelas:
+
   CREATE TABLE usuarios( 
     id_usuario int primary key AUTO_INCREMENT,
     nome varchar(255),
