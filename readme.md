@@ -32,6 +32,13 @@ Após instalação e configuração, crie as seguinte tabelas no MySQL>
         complemento varchar (255)
         );
 
+    1.3- Popule as tabelas com alguns dados para teste, da seguinte forma e 
+    preencha os "VALUES" conforme preferir.
+
+        INSERT INTO usuarios (nome, sobrenome, email, telefone, cpf)
+        VALUES ('algum nome', 'sobrenome exemplo', '123@123.com', '12345', '1234567689');
+    
+
 2- Na pasta raiz do app, execute o comando "npm install" para instalar os pacotes.
 
 3- Após isso execute o comando "node index.js" para executar a aplicação, que deve estar disponível e printar no console "Server running! Database connected" e estar disponível em "localhost:4242"
