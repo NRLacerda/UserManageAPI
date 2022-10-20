@@ -1,11 +1,11 @@
 <h1>STENNG - BACKEND PROVA</h1>
 <h3>Por Nicolas Rocha Lacerda</h3>
 
-1- Para utilizar a aplicação, tenha em sua máquina o MySQL com as seguintes configurações>
-user: 'root',
-password:'@n1Mseguranza',
-database: 'stenngdb'
-Após instalação e configuração, crie as seguinte tabelas no MySQL>
+1- Para utilizar a aplicação, tenha em sua máquina o MySQL com as seguintes configurações><br>
+user: 'root',<br>
+password:'@n1Mseguranza',<br>
+database: 'stenngdb'<br>
+Após instalação e configuração, crie as seguinte tabelas no MySQL><br>
 
     1.1- Tabela de usuários.
 
