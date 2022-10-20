@@ -38,7 +38,7 @@ app.get("/usuarios/:id_usuario", function (req, res) {
 });
 // Deleta um usuário em específico, mencionado no param
 app.delete("/delusuarios/:id_usuario", function (req, res) {
-    var sql = "DELETE * FROM usuarios where id_usuario="
+    var sql = "DELETE FROM usuarios where id_usuario="
 	conn.query(sql + req.params.id_usuario,function (err, rows) {
 			if (err) {
 				res.status(400).send("error", err)
