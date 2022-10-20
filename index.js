@@ -1,16 +1,6 @@
 const express = require("express");
 const conn = require("./models/db");
 const app = express();
-const handlebars = require("express-handlebars");
-
-// Handlebars config
-app.set("view engine", "handlebars");
-app.engine(
-	"handlebars",
-	handlebars.engine({
-		layoutsDir: __dirname + "/views/layouts", // puxa o html  "main", que invoca em cadeia
-	})
-);
 
 // Tabela usuários.
 
@@ -26,7 +16,8 @@ app.get("/usuarios", function (req, res) {
 });
 // Exibe um usuário em específico, mencionado no param
 app.get("/usuarios/:id_usuario", function (req, res) {
-	conn.query("SELECT * FROM usuarios where id_usuario=" + req.params.id_usuario,
+	var sql= "SELECT * FROM usuarios where id_usuario="
+    conn.query(sql + req.params.id_usuario,
 		function (err, rows) {
 			if (isNaN(req.params.id_usuario)) {
 				res.status(400).send("400 - Erro, NaN!")
@@ -36,8 +27,15 @@ app.get("/usuarios/:id_usuario", function (req, res) {
 		}
 	);
 });
+// Adiciona um usuário em específico
+app.post("/usuarios/:nome/:sobrenome", function(req,res){
+    var sql = "INSERT INTO usuarios (nome, sobrenome) VALUES ('"
+    var sql2 = "');"
+    var sql3 = ","
+    conn.query(sql + req.params.nome +sql3+ req.params.sobrenome + sql2)
+})
 // Deleta um usuário em específico, mencionado no param
-app.delete("/delusuarios/:id_usuario", function (req, res) {
+app.delete("/usuarios/:id_usuario", function (req, res) {
     var sql = "DELETE FROM usuarios where id_usuario="
 	conn.query(sql + req.params.id_usuario,function (err, rows) {
 			if (err) {
@@ -47,10 +45,6 @@ app.delete("/delusuarios/:id_usuario", function (req, res) {
 			}
 		}
 	);
-});
-// Renderiza tela de cadUser
-app.get("/usuarioss", function (req,res) {
-	res.render("teste"); // Rota de cadastro de user
 });
 // Envia statuscode
 app.get("/", function (req, res) {
