@@ -42,6 +42,6 @@ Após instalação e configuração, crie as seguinte tabelas no MySQL><br>
 
 2- Na pasta raiz do app, execute o comando "npm install" para instalar os pacotes.
 
-3- Após isso execute o comando "node index.js" para executar a aplicação, que deve estar disponível e printar no console "Server running! Database connected" e estar disponível em "localhost:4242"
+3- Após isso execute o comando "nodemon index.js" para executar a aplicação, que deve estar disponível e printar no console "Server running! Database connected" e estar disponível em "localhost:4242"
 
-Adicional: Hospedei a API numa VM na DigitalOcean, pode ser chamada através de http://68.183.98.208:4242/a-rota-aqui
+Adicional: Fiz deploy da API numa VM na DigitalOcean, pode ser chamada através de http://68.183.98.208:4242/a-rota-aqui

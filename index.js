@@ -70,7 +70,7 @@ app.delete("/usuarios/:id_usuario", function (req, res) {
 // ------------------------------------------------------------------------
 //                      Endereços_usuarios
 
-app.get("enderecos-usuario/:id_usuario", function (req,res){
+app.get("enderecos-usuarios/:id_usuario", function (req,res){
     var idusuario= req.params.id_usuario
     conn.query('SELECT * FROM enderecos_usuarios INNER JOIN usuarios ON id_usuarios=id_usuario WHERE id_usuarios=?;',[idusuario], function(err,row){
     if (err){
