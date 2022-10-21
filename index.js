@@ -42,6 +42,7 @@ app.post("/usuarios/:nome/:sobrenome/:email/:telefone/:cpf", function(req,res){
         }
     )
 })
+// Atualiza o usuário do parametro
 app.put("/usuarios/:id_usuario", function(req,res){
     let idusuario = req.params.id_usuario
     conn.query('UPDATE usuarios SET nome=teste, sobrenome=srhsrh,email=srh@sdrhr.com,telefone=1234,cpf=1255 WHERE id_usuario=?',[idusuario],
@@ -66,6 +67,17 @@ app.delete("/usuarios/:id_usuario", function (req, res) {
 		}
 	);
 });
+// ------------------------------------------------------------------------
+//                      Endereços_usuarios
+
+app.get("enderecos-usuario/:id_usuario", function (req,res){
+    var idusuario= req.params.id_usuario
+    conn.query('SELECT * FROM enderecos_usuarios INNER JOIN usuarios ON id_usuarios=id_usuario WHERE id_usuarios=?;',[idusuario], function(err,row){
+    if (err){
+        res.status(400).send("error", err)
+    }else{res.status(200).send(row)}
+    })
+})
 // Envia statuscode
 app.get("/", function (req, res) {
 	res.status(200).send(
