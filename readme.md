@@ -44,4 +44,4 @@ Após instalação e configuração, crie as seguinte tabelas no MySQL><br>
 
 3- Após isso execute o comando "node index.js" para executar a aplicação, que deve estar disponível e printar no console "Server running! Database connected" e estar disponível em "localhost:4242"
 
-Adicional: Hospedei a API numa VM na DigitalOcean, pode ser chamada através de http://68.183.98.208:4242/usuarios
+Adicional: Hospedei a API numa VM na DigitalOcean, pode ser chamada através de http://68.183.98.208:4242/a-rota-aqui
