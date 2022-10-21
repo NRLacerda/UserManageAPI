@@ -28,11 +28,20 @@ app.get("/usuarios/:id_usuario", function (req, res) {
 	);
 });
 // Adiciona um usuário em específico
-app.post("/usuarios/:nome/:sobrenome", function(req,res){
-    var sql = "INSERT INTO usuarios (nome, sobrenome) VALUES ('"
-    var sql2 = "');"
-    var sql3 = ","
-    conn.query(sql + req.params.nome +sql3+ req.params.sobrenome + sql2)
+app.post("/usuarios/:nome/:sobrenome/:email/:telefone/:cpf", function(req,res){
+    let nome = req.params.nome
+    let sobrenome = req.params.sobrenome
+    let email = req.params.email
+    let telefone = req.params.telefone
+    let cpf = req.params.cpf
+    conn.query(
+        'INSERT INTO usuarios (nome, sobrenome, email, telefone, cpf) VALUES (?,?,?,?,?)',[nome,sobrenome,email,telefone,cpf],
+        function (err, rows){
+            if (err){
+                res.status(400).send("error", err)
+            }else{res.status(200).send(rows)}
+        }
+    )
 })
 // Deleta um usuário em específico, mencionado no param
 app.delete("/usuarios/:id_usuario", function (req, res) {
@@ -41,7 +50,7 @@ app.delete("/usuarios/:id_usuario", function (req, res) {
 			if (err) {
 				res.status(400).send("error", err)
 			} else {
-				res.status(299).send(req.params.id_usuario + " deleted");
+				res.status(200).send(req.params.id_usuario + " deleted");
 			}
 		}
 	);
