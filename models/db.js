@@ -45,8 +45,12 @@ Tabelas:
     -----------
     
     INSERT INTO usuarios (nome, sobrenome, email, telefone, cpf)
-    VALUES ('nic', 'roc', '123@123.com', '12345', '1234567689');
+    VALUES (?,?,?,?,?);
 
     INSERT INTO enderecos_usuarios (id_usuario,logradouro, numero, cidade, uf, cep, bairro, complemento) 
-    VALUES ('21','lograd','124','abc','abcd','SP','1234577','11');
+    VALUES (?,?,?,?,?,?,?,?);
+
+    SELECT *
+    FROM enderecos_usuarios
+    INNER JOIN usuarios ON id_usuarios=id_usuario WHERE id_usuarios=?;
 */
