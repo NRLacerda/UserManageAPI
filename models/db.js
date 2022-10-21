@@ -29,15 +29,15 @@ Tabelas:
     -----------
     CREATE TABLE enderecos_usuarios( 
     id_endereco_usuario int primary key AUTO_INCREMENT,
-    id_usuarios int,
+    id_usuarios int not null,
     foreign key (id_usuarios) references usuarios(id_usuario),
-    logradouro varchar(255),
-    numero varchar(45),
-    cidade varchar (255),
-    uf varchar (2),
-    cep varchar (45),
-    bairro varchar (255),
-    complemento varchar (255)
+    logradouro varchar(255) not null,
+    numero varchar(45) not null,
+    cidade varchar (255) not null,
+    uf varchar (2) not null,
+    cep varchar (45) not null,
+    bairro varchar (255) not null,
+    complemento varchar (255) not null
     );
     -----------
     ALTER TABLE enderecos_usuarios
