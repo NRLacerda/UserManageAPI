@@ -34,12 +34,23 @@ app.post("/usuarios/:nome/:sobrenome/:email/:telefone/:cpf", function(req,res){
     let email = req.params.email
     let telefone = req.params.telefone
     let cpf = req.params.cpf
-    conn.query(
-        'INSERT INTO usuarios (nome, sobrenome, email, telefone, cpf) VALUES (?,?,?,?,?)',[nome,sobrenome,email,telefone,cpf],
+    conn.query('INSERT INTO usuarios (nome, sobrenome, email, telefone, cpf) VALUES (?,?,?,?,?)',[nome,sobrenome,email,telefone,cpf],
         function (err, rows){
             if (err){
                 res.status(400).send("error", err)
             }else{res.status(200).send(rows)}
+        }
+    )
+})
+app.put("/usuarios/:id_usuario", function(req,res){
+    let idusuario = req.params.id_usuario
+    conn.query('UPDATE usuarios SET nome=teste, sobrenome=srhsrh,email=srh@sdrhr.com,telefone=1234,cpf=1255 WHERE id_usuario=?',[idusuario],
+        function (err, rows){
+            if (err){
+                res.status(400).send("error", err)
+            }else{
+                res.status(200).send(rows)
+            }
         }
     )
 })
