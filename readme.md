@@ -22,13 +22,14 @@ Após instalação e configuração, crie as seguinte tabelas no MySQL><br>
 
         CREATE TABLE enderecos_usuarios( 
         id_endereco_usuario int primary key AUTO_INCREMENT,
-        FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario),
-        logradouro varchar(255) NOT NULL,
-        numero varchar(45) NOT NULL,
-        cidade varchar (255) NOT NULL,
-        uf varchar (2) NOT NULL,
-        cep varchar (45) NOT NULL,
-        bairro varchar (255) NOT NULL,
+        id_usuarios int,
+        foreign key (id_usuarios) references usuarios(id_usuario),
+        logradouro varchar(255),
+        numero varchar(45),
+        cidade varchar (255),
+        uf varchar (2),
+        cep varchar (45),
+        bairro varchar (255),
         complemento varchar (255)
         );
 
