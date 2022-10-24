@@ -31,13 +31,13 @@ Tabelas:
     id_endereco_usuario int primary key AUTO_INCREMENT,
     id_usuarios int not null,
     foreign key (id_usuarios) references usuarios(id_usuario),
-    logradouro varchar(255) not null,
-    numero varchar(45) not null,
-    cidade varchar (255) not null,
-    uf varchar (2) not null,
+    logradouro varchar(255)not null,
+    numero varchar(45)not null,
+    cidade varchar (255)not null,
+    uf varchar (2)not null,
     cep varchar (45) not null,
     bairro varchar (255) not null,
-    complemento varchar (255) not null
+    complemento varchar (255) 
     );
     -----------
     ALTER TABLE enderecos_usuarios
@@ -53,4 +53,7 @@ Tabelas:
     SELECT *
     FROM enderecos_usuarios
     INNER JOIN usuarios ON id_usuarios=id_usuario WHERE id_usuarios=?;
+
+    INSERT INTO enderecos_usuarios(id_usuarios, logradouro, numero,cidade,uf,cep,bairro,complemento) VALUES
+    ((SELECT id_usuario from usuarios WHERE id_usuario=8),'rua nelson', '123' ,'sbc','sp','09812020','doscasa','abc');
 */

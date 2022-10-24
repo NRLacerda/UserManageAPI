@@ -45,14 +45,14 @@ app.post("/usuarios/:nome/:sobrenome/:email/:telefone/:cpf", function(req,res){
 // Atualiza o usuário do parametro
 app.put("/usuarios/:id_usuario", function(req,res){
     let idusuario = req.params.id_usuario
-    conn.query('UPDATE usuarios SET nome=teste, sobrenome=srhsrh,email=srh@sdrhr.com,telefone=1234,cpf=1255 WHERE id_usuario=?',[idusuario],
-        function (err, rows){
+    conn.query('UPDATE usuarios SET nome=sucodeuva WHERE id_usuario=?',[idusuario],
+        /*function (err, rows){
             if (err){
-                res.status(400).send("error", err)
+                res.status(err)
             }else{
-                res.status(200).send(rows)
+                res.status(rows)
             }
-        }
+        }*/
     )
 })
 // Deleta um usuário em específico, mencionado no param
@@ -92,6 +92,7 @@ app.listen(4242, function () {
 -----------------
 Teste add info 
 -----------------
+?= coloca uma variável no sql
 res.send = envia uma resposta em forma de json para request da api
 -----------------
 DB DRIVER
