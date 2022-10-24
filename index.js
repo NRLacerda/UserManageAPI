@@ -80,15 +80,26 @@ app.get("enderecos-usuarios/:id_usuario", function (req,res){
 })
 // Lista endereço especificado via ID
 app.get("enderecos-usuario/:id_endereco_usuario", function (req,res){
-    var idendusuario= req.params.id_endereco_usuario
     var sql='select * from enderecos_usuarios where id_endereco_usuario='
-    var sql2 = conn.query(sql+idendusuario)
+    conn.query(sql+req.params.id_endereco_usuario, function(err,rows){
+        if (err){
+            res.status(400).send(err)
+        }else{
+            res.status(200).status(rows)
+        }
+    })
     console.log(sql2)
 })
+// Delete endereço especificado
 
-
-
-
+app.delete("enderecos-usuario/:id_endereco_usuario",function(req,res){
+    var sql = "delete from enderecos_usuarios where id_endereco_usuario="
+    conn.query(sql+req.params.id_endereco_usuario,function(err,rows){
+        if(err){
+            res.status(400).send(err)
+        }else{res.status(200).send(rows)}
+    })
+})
 // Envia statuscode
 app.get("/", function (req, res) {
 	res.status(200).send(
