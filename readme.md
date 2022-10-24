@@ -24,21 +24,24 @@ Após instalação e configuração, crie as seguinte tabelas no MySQL><br>
         id_endereco_usuario int primary key AUTO_INCREMENT,
         id_usuarios int not null,
         foreign key (id_usuarios) references usuarios(id_usuario),
-        logradouro varchar(255) not null,
-        numero varchar(45) not null,
-        cidade varchar (255) not null,
-        uf varchar (2) not null,
+        logradouro varchar(255)not null,
+        numero varchar(45)not null,
+        cidade varchar (255)not null,
+        uf varchar (2)not null,
         cep varchar (45) not null,
         bairro varchar (255) not null,
-        complemento varchar (255) not null
+        complemento varchar (255) 
         );
-
     1.3- Popule as tabelas com alguns dados para teste, da seguinte forma e 
     preencha os "VALUES" conforme preferir.
-
+        Ex:
         INSERT INTO usuarios (nome, sobrenome, email, telefone, cpf)
         VALUES ('algum nome', 'sobrenome exemplo', '123@123.com', '12345', '1234567689');
-    
+
+    1.4- Faça o mesmo com a tabela enderecos_usuarios
+        Ex:
+        INSERT INTO enderecos_usuarios(id_usuarios, logradouro, numero,cidade,uf,cep,bairro,complemento) VALUES
+        (SELECT id_usuario from usuarios WHERE id_usuario=8),'rua nelson', '123' ,'sbc','sp','09812020','doscasa','abc');
 
 2- Na pasta raiz do app, execute o comando "npm install" para instalar os pacotes.
 
