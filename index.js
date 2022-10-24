@@ -69,7 +69,7 @@ app.delete("/usuarios/:id_usuario", function (req, res) {
 });
 // ------------------------------------------------------------------------
 //                      Endereços_usuarios
-
+// Lista todos endereços de um determinado usuário
 app.get("enderecos-usuarios/:id_usuario", function (req,res){
     var idusuario= req.params.id_usuario
     conn.query('SELECT * FROM enderecos_usuarios INNER JOIN usuarios ON id_usuarios=id_usuario WHERE id_usuarios=?;',[idusuario], function(err,row){
@@ -78,6 +78,17 @@ app.get("enderecos-usuarios/:id_usuario", function (req,res){
     }else{res.status(200).send(row)}
     })
 })
+// Lista endereço especificado via ID
+app.get("enderecos-usuario/:id_endereco_usuario", function (req,res){
+    var idendusuario= req.params.id_endereco_usuario
+    var sql='select * from enderecos_usuarios where id_endereco_usuario='
+    var sql2 = conn.query(sql+idendusuario)
+    console.log(sql2)
+})
+
+
+
+
 // Envia statuscode
 app.get("/", function (req, res) {
 	res.status(200).send(
@@ -101,14 +112,4 @@ The exists condition can be used with subquery.
 It returns true when row exists in the table, otherwise false is returned. 
 True is represented in the form of 1 and false is represented as 0.
 -----------------
-app.post("/usuarios/teste", function(req,res){
-    let sql = "INSERT INTO usuarios (nome, sobrenome, email, telefone, cpf) VALUES ("+req.params.nome+ req.params.sobrenome+ req.params.email+req.params.telefone+req.params.cpf+")"
-    conn.query(sql, function(err,rows){
-        if (err) {
-            console.log(err)
-        } else {
-            console.log(rows);
-        }
-    })
-})
 */
