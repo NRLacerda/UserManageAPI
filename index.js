@@ -39,16 +39,16 @@ app.post("/usuarios/:nome/:sobrenome/:email/:telefone/:cpf", function(req,res){
     )
 })
 // Atualiza o usuário do parametro
-app.put("/usuarios/:id_usuario", function(req,res){
-    let idusuario = req.params.id_usuario
-    conn.query('UPDATE usuarios SET nome=sucodeuva WHERE id_usuario=?',[idusuario],
-        /*function (err, rows){
+app.put("/usuarios/:id_usuario/:nome", function(req,res){
+    let idusuario = req.params.id_usuario;let sql = "update usuarios set nome=";let sql2='"';let sql3= "";let nome=req.params.nome;let where="where id_usuario="
+    conn.query(sql+sql2+nome+sql2+where+idusuario,
+        function (err, rows){
             if (err){
                 res.status(err)
             }else{
                 res.status(rows)
             }
-        }*/
+        }
     )
 })
 // Deleta um usuário em específico, mencionado no param
