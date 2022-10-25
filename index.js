@@ -1,65 +1,81 @@
 const express = require("express");
 const conn = require("./models/db");
 const app = express();
+const bodyParser = require("body-parser")
 
+// Body parser
+app.use(express.json());
 // Tabela usuários.
 
 // Exibe todos usuários cadastrados
 app.get("/usuarios", function (req, res) {
-	conn.query("SELECT * FROM usuarios", function (err, rows) {
-		if (err) {
-			res.send("error", err);
-		} else {
-			res.status(200).send(rows);
-		}
+	conn.query("SELECT * FROM usuarios", function (err, row) {
+        if(err){
+            res.json({
+                "codigo": 404,
+                "status":"erro",
+                "mensagem":"Erro"}
+                )
+        }else{res.json({
+            "codigo": 200,
+            "status":"Sucesso",
+            "mensagem":"Requisição bem sucedida."}).send(row)}
 	});
 });
 // Exibe um usuário em específico, mencionado no param
 app.get("/usuarios/:id_usuario", function (req, res) {
 	var sql= "SELECT * FROM usuarios where id_usuario="
     conn.query(sql + req.params.id_usuario,
-		function (err, rows) {
-			if (isNaN(req.params.id_usuario)) {
-				res.status(400).send("400 - Erro, NaN!")
-			} else {
-                res.status(200).send(rows)			
-            }
+		function (err, row) {
+            if(err){
+                res.json({
+                    "codigo": 404,
+                    "status":"erro",
+                    "mensagem":"Erro"}
+                    )
+            }else{res.json({
+                "codigo": 200,
+                "status":"Sucesso",
+                "mensagem":"Requisição bem sucedida."}).send(row)}
 		}
 	);
 });
 // Adiciona um usuário em específico
-app.post("/usuarios/:nome/:sobrenome/:email/:telefone/:cpf", function(req,res){
-    let nome = req.params.nome;let sobrenome = req.params.sobrenome;let email = req.params.email;let telefone = req.params.telefone;let cpf = req.params.cpf
-    conn.query('INSERT INTO usuarios (nome, sobrenome, email, telefone, cpf) VALUES (?,?,?,?,?)',[nome,sobrenome,email,telefone,cpf],
-        function (err, rows){
-            if (err){
-                res.status(400).send("error", err)
-            }else{res.status(200).send(rows)}
-        }
-    )
+app.post("/teste", function(req,res){
+    console.log(req.body.teste)
 })
 // Atualiza o usuário do parametro
 app.put("/usuarios/:id_usuario/:nome", function(req,res){
     let idusuario = req.params.id_usuario;let sql = "update usuarios set nome=";let sql2='"';let sql3= "";let nome=req.params.nome;let where="where id_usuario="
     conn.query(sql+sql2+nome+sql2+where+idusuario,
-        function (err, rows){
-            if (err){
-                res.status(err)
-            }else{
-                res.status(rows)
-            }
+        function (err, row){
+            if(err){
+                res.json({
+                    "codigo": 404,
+                    "status":"erro",
+                    "mensagem":"Erro"}
+                    )
+            }else{res.json({
+                "codigo": 200,
+                "status":"Sucesso",
+                "mensagem":"Requisição bem sucedida."}).send(row)}
         }
     )
 })
 // Deleta um usuário em específico, mencionado no param
 app.delete("/usuarios/:id_usuario", function (req, res) {
     var sql = "DELETE FROM usuarios where id_usuario="
-	conn.query(sql + req.params.id_usuario,function (err, rows) {
-			if (err) {
-				res.status(400).send("error", err)
-			} else {
-				res.status(200).send(req.params.id_usuario + " deleted");
-			}
+	conn.query(sql + req.params.id_usuario,function (err, row) {
+        if(err){
+            res.json({
+                "codigo": 404,
+                "status":"erro",
+                "mensagem":"Erro"}
+                )
+        }else{res.json({
+            "codigo": 200,
+            "status":"Sucesso",
+            "mensagem":"Requisição bem sucedida."}).send(row)}
 		}
 	);
 });
@@ -69,20 +85,32 @@ app.delete("/usuarios/:id_usuario", function (req, res) {
 app.get("enderecos-usuarios/:id_usuario", function (req,res){
     var idusuario= req.params.id_usuario
     conn.query('SELECT * FROM enderecos_usuarios INNER JOIN usuarios ON id_usuarios=id_usuario WHERE id_usuarios=?;',[idusuario], function(err,row){
-    if (err){
-        res.status(400).send("error", err)
-    }else{res.status(200).send(row)}
+        if(err){
+            res.json({
+                "codigo": 404,
+                "status":"erro",
+                "mensagem":"Erro"}
+                )
+        }else{res.json({
+            "codigo": 200,
+            "status":"Sucesso",
+            "mensagem":"Requisição bem sucedida."}).send(row)}
     })
 })
 // Lista endereço especificado via ID
 app.get("enderecos-usuario/:id_endereco_usuario", function (req,res){
     var sql='select * from enderecos_usuarios where id_endereco_usuario='
-    conn.query(sql+req.params.id_endereco_usuario, function(err,rows){
-        if (err){
-            res.status(400).send(err)
-        }else{
-            res.status(200).status(rows)
-        }
+    conn.query(sql+req.params.id_endereco_usuario, function(err,row){
+        if(err){
+            res.json({
+                "codigo": 404,
+                "status":"erro",
+                "mensagem":"Erro"}
+                )
+        }else{res.json({
+            "codigo": 200,
+            "status":"Sucesso",
+            "mensagem":"Requisição bem sucedida."}).send(row)}
     })
     console.log(sql2)
 })
@@ -92,17 +120,31 @@ app.delete("enderecos-usuario/:id_endereco_usuario",function(req,res){
     var sql = "delete from enderecos_usuarios where id_endereco_usuario="
     conn.query(sql+req.params.id_endereco_usuario,function(err,rows){
         if(err){
-            res.status(400).send(err)
-        }else{res.status(200).send(rows)}
+            res.json({
+                "codigo": 404,
+                "status":"erro",
+                "mensagem":"Erro"}
+                )
+        }else{res.json({
+            "codigo": 200,
+            "status":"Sucesso",
+            "mensagem":"Requisição bem sucedida."}).send(row)}
     })
 })
 // Adiciona novo endereço
 app.post("enderecos-usuario/:id_usuario/:logradouro/:numero/:cidade/:uf/:cep/:bairro", function(req,res){
-    var idusuario=req.params.id_usuario;var logradouro=req.params.logradouro;var numero=req.params.numero;var cidade=req.params.cidade;var uf=req.params.uf;var bairro=req.params.bairro
-    conn.query('INSERT INTO enderecos_usuarios(id_usuarios, logradouro, numero,cidade,uf,cep,bairro) VALUES ((SELECT id_usuario from usuarios WHERE id_usuario=8),?,?,?,?,?,?,?)',[idusuario,logradouro,numero,cidade,uf,bairro],function(err,row){
+    let iduser=parseInt(req.body.id_usuario);let lograd=req.body.logradouro;let nmr =req.body.numero;let cidade=req.body.cidade;let uf=req.body.uf;let cep=req.body.cep;let bairro=req.body.bairro
+    conn.query('INSERT INTO enderecos_usuarios(id_usuarios, logradouro, numero,cidade,uf,cep,bairro) VALUES ((SELECT id_usuario from usuarios WHERE id_usuario=?),?,?,?,?,?,?);',[iduser],[lograd],[nmr],[cidade],[uf],[cep],[bairro],function(err,row){
         if(err){
-            res.status(400).send(err)
-        }else{res.status(200).send(rows)}
+            res.json({
+                "codigo": 404,
+                "status":"erro",
+                "mensagem":"Erro"}
+                )
+        }else{res.json({
+            "codigo": 200,
+            "status":"Sucesso",
+            "mensagem":"Requisição bem sucedida."}).send(row)}
     })
 })
 // Envia statuscode
