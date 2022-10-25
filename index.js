@@ -75,8 +75,8 @@ app.delete("/usuarios/:id_usuario", function (req, res) {
 // ------------------------------------------------------------------------
 //                      Endereços_usuarios
 // Lista todos endereços de um determinado usuário
-app.get("enderecos-usuario/:id_usuario", function (req, res) {
-	var idusuario = req.params.id_usuario;
+app.get("/enderecos-usuario/:idusuario", function (req, res) {
+	var idusuario = req.params.idusuario;
     var select = "SELECT * FROM enderecos_usuarios INNER JOIN usuarios ON id_usuarios=id_usuario WHERE id_usuarios="
 	conn.query(select+idusuario,function (err, row) {
 		if (err) {
@@ -88,9 +88,10 @@ app.get("enderecos-usuario/:id_usuario", function (req, res) {
 	);
 });
 // Lista endereço especificado via ID
-app.get("enderecos-usuarios/:id_endereco_usuario", function (req, res) {
+app.get("/enderecos-usuarios/:id_endereco_usuario", function (req, res) {
+    var idend = parseInt(req.params.id_endereco_usuario)
 	var select = "select * from enderecos_usuarios where id_endereco_usuario=";
-	conn.query(select + req.params.id_endereco_usuario, function (err, row) {
+	conn.query('select * from enderecos_usuarios where id_endereco_usuario=?',[idend], function (err, row) {
 		if (err) {
 			res.send(erro(err));
 		} else {
@@ -101,9 +102,9 @@ app.get("enderecos-usuarios/:id_endereco_usuario", function (req, res) {
 });
 // Delete endereço especificado
 
-app.delete("enderecos-usuario/:id_endereco_usuario", function (req, res) {
+app.delete("/enderecos-usuario/:id_endereco_usuario", function (req, res) {
 	var del = "delete from enderecos_usuarios where id_endereco_usuario=";
-	conn.query(del + req.params.id_endereco_usuario, function (err, rows) {
+	conn.query(del + req.params.id_endereco_usuario, function (err, row) {
 		if (err) {
 			res.send(erro(err));
 		} else {
@@ -112,7 +113,7 @@ app.delete("enderecos-usuario/:id_endereco_usuario", function (req, res) {
 	});
 });
 // Adiciona novo endereço
-app.post("enderecos-usuario", function (req, res) {
+app.post("/enderecos-usuario", function (req, res) {
 	let iduser = parseInt(req.body.id_usuario);
 	let lograd = req.body.logradouro;
 	let nmr = req.body.numero;
@@ -132,7 +133,7 @@ app.post("enderecos-usuario", function (req, res) {
 		}
 	);
 });
-app.put("enderecos-usuario/:id_endereco_usuario", function (req, res) {
+app.put("/enderecos-usuario/:id_endereco_usuario", function (req, res) {
 	let idend = req.params.id_endereco_usuario;
 	let where = "WHERE id_endereco_usuario=";
 	conn.query(
