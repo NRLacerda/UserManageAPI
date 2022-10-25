@@ -56,4 +56,5 @@ Tabelas:
 
     INSERT INTO enderecos_usuarios(id_usuarios, logradouro, numero,cidade,uf,cep,bairro) VALUES 
     ((SELECT id_usuario from usuarios WHERE id_usuario=8),'rua','123','sp','sp','0981202','bairro');
+    z
 */
