@@ -27,10 +27,6 @@ app.get("/usuarios/:id_usuario", function (req, res) {
 		}
 	});
 });
-// Adiciona um usuário em específico
-app.post("/teste", function (req, res) {
-	console.log(req.body.teste);
-});
 // Atualiza o usuário do parametro
 app.post("/usuarios", function (req, res) {
 	let nome = req.body.nome;
@@ -48,6 +44,7 @@ app.post("/usuarios", function (req, res) {
 		}
 	});
 });
+// Add um usuario
 app.put("/usuarios/:id_usuario", function (req, res) {
     let iduser = req.params.id_usuario
 	let nome = req.body.nome;
@@ -56,8 +53,7 @@ app.put("/usuarios/:id_usuario", function (req, res) {
 	let telefone = req.body.telefone;
 	let cpf = req.body.cpf;
 	conn.query(
-		"UPDATE usuarios set nome=?, sobrenome=?, email=?,telefone=?,cpf=?",
-		[nome,sobrenome,email,telefone,cpf],'WHERE id_usuario=',iduser,function(err,row){
+		"UPDATE usuarios set nome=?, sobrenome=?, email=?,telefone=?,cpf=?",[nome][sobrenome][email][telefone][cpf],' WHERE id_usuario='+iduser,function(err,row){
 		if (err) {
 			res.send(erro(err));
 		} else {
