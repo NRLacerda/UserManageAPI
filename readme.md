@@ -41,10 +41,12 @@ Após instalação e configuração, crie as seguinte tabelas no MySQL><br>
     1.4- Faça o mesmo com a tabela enderecos_usuarios
         Ex:
         INSERT INTO enderecos_usuarios(id_usuarios, logradouro, numero,cidade,uf,cep,bairro,complemento) VALUES
-        (SELECT id_usuario from usuarios WHERE id_usuario=8),'rua nelson', '123' ,'sbc','sp','09812020','doscasa','abc');
+        ((SELECT id_usuario from usuarios WHERE id_usuario=8),'rua nelson', '123' ,'sbc','sp','09812020','doscasa','abc');
 
 2- Na pasta raiz do app, execute o comando "npm install" para instalar os pacotes.
 
-3- Após isso execute o comando "nodemon index.js" para executar a aplicação, que deve estar disponível e printar no console "Server running! Database connected" e estar disponível em "localhost:4242"
+3- Após isso execute o comando "node index.js" para executar a aplicação, que deve estar disponível e printar no console "Server running! Database connected" e estar disponível em "localhost:4242"
 
 Adicional: Fiz deploy da API numa VM na DigitalOcean, pode ser chamada através de http://68.183.98.208:4242/a-rota-aqui
+
+OBS: Caso ocorra algum erro é necessário reiniciar a aplicação assim como no passo 3.

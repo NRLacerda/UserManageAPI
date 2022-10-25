@@ -54,6 +54,6 @@ Tabelas:
     FROM enderecos_usuarios
     INNER JOIN usuarios ON id_usuarios=id_usuario WHERE id_usuarios=?;
 
-    INSERT INTO enderecos_usuarios(id_usuarios, logradouro, numero,cidade,uf,cep,bairro,complemento) VALUES
-    ((SELECT id_usuario from usuarios WHERE id_usuario=8),'rua nelson', '123' ,'sbc','sp','09812020','doscasa','abc');
+    INSERT INTO enderecos_usuarios(id_usuarios, logradouro, numero,cidade,uf,cep,bairro) VALUES 
+    ((SELECT id_usuario from usuarios WHERE id_usuario=8),'rua','123','sp','sp','0981202','bairro');
 */

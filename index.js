@@ -29,11 +29,7 @@ app.get("/usuarios/:id_usuario", function (req, res) {
 });
 // Adiciona um usuário em específico
 app.post("/usuarios/:nome/:sobrenome/:email/:telefone/:cpf", function(req,res){
-    let nome = req.params.nome
-    let sobrenome = req.params.sobrenome
-    let email = req.params.email
-    let telefone = req.params.telefone
-    let cpf = req.params.cpf
+    let nome = req.params.nome;let sobrenome = req.params.sobrenome;let email = req.params.email;let telefone = req.params.telefone;let cpf = req.params.cpf
     conn.query('INSERT INTO usuarios (nome, sobrenome, email, telefone, cpf) VALUES (?,?,?,?,?)',[nome,sobrenome,email,telefone,cpf],
         function (err, rows){
             if (err){
@@ -95,6 +91,15 @@ app.get("enderecos-usuario/:id_endereco_usuario", function (req,res){
 app.delete("enderecos-usuario/:id_endereco_usuario",function(req,res){
     var sql = "delete from enderecos_usuarios where id_endereco_usuario="
     conn.query(sql+req.params.id_endereco_usuario,function(err,rows){
+        if(err){
+            res.status(400).send(err)
+        }else{res.status(200).send(rows)}
+    })
+})
+// Adiciona novo endereço
+app.post("enderecos-usuario/:id_usuario/:logradouro/:numero/:cidade/:uf/:cep/:bairro", function(req,res){
+    var idusuario=req.params.id_usuario;var logradouro=req.params.logradouro;var numero=req.params.numero;var cidade=req.params.cidade;var uf=req.params.uf;var bairro=req.params.bairro
+    conn.query('INSERT INTO enderecos_usuarios(id_usuarios, logradouro, numero,cidade,uf,cep,bairro) VALUES ((SELECT id_usuario from usuarios WHERE id_usuario=8),?,?,?,?,?,?,?)',[idusuario,logradouro,numero,cidade,uf,bairro],function(err,row){
         if(err){
             res.status(400).send(err)
         }else{res.status(200).send(rows)}
