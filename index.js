@@ -11,15 +11,8 @@ app.use(express.json());
 app.get("/usuarios", function (req, res) {
 	conn.query("SELECT * FROM usuarios", function (err, row) {
         if(err){
-            res.json({
-                "codigo": 404,
-                "status":"erro",
-                "mensagem":"Erro"}
-                )
-        }else{res.json({
-            "codigo": 200,
-            "status":"Sucesso",
-            "mensagem":"Requisição bem sucedida."}).send(row)}
+            erro(err)
+        }else{sucess(row)}
 	});
 });
 // Exibe um usuário em específico, mencionado no param
@@ -28,15 +21,8 @@ app.get("/usuarios/:id_usuario", function (req, res) {
     conn.query(sql + req.params.id_usuario,
 		function (err, row) {
             if(err){
-                res.json({
-                    "codigo": 404,
-                    "status":"erro",
-                    "mensagem":"Erro"}
-                    )
-            }else{res.json({
-                "codigo": 200,
-                "status":"Sucesso",
-                "mensagem":"Requisição bem sucedida."}).send(row)}
+                erro(err)
+            }else{sucess(row)}
 		}
 	);
 });
@@ -50,15 +36,8 @@ app.put("/usuarios/:id_usuario/:nome", function(req,res){
     conn.query(sql+sql2+nome+sql2+where+idusuario,
         function (err, row){
             if(err){
-                res.json({
-                    "codigo": 404,
-                    "status":"erro",
-                    "mensagem":"Erro"}
-                    )
-            }else{res.json({
-                "codigo": 200,
-                "status":"Sucesso",
-                "mensagem":"Requisição bem sucedida."}).send(row)}
+                erro(err)
+            }else{sucess(row)}
         }
     )
 })
@@ -67,15 +46,8 @@ app.delete("/usuarios/:id_usuario", function (req, res) {
     var sql = "DELETE FROM usuarios where id_usuario="
 	conn.query(sql + req.params.id_usuario,function (err, row) {
         if(err){
-            res.json({
-                "codigo": 404,
-                "status":"erro",
-                "mensagem":"Erro"}
-                )
-        }else{res.json({
-            "codigo": 200,
-            "status":"Sucesso",
-            "mensagem":"Requisição bem sucedida."}).send(row)}
+            erro(err)
+        }else{sucess(row)}
 		}
 	);
 });
@@ -86,15 +58,8 @@ app.get("enderecos-usuarios/:id_usuario", function (req,res){
     var idusuario= req.params.id_usuario
     conn.query('SELECT * FROM enderecos_usuarios INNER JOIN usuarios ON id_usuarios=id_usuario WHERE id_usuarios=?;',[idusuario], function(err,row){
         if(err){
-            res.json({
-                "codigo": 404,
-                "status":"erro",
-                "mensagem":"Erro"}
-                )
-        }else{res.json({
-            "codigo": 200,
-            "status":"Sucesso",
-            "mensagem":"Requisição bem sucedida."}).send(row)}
+            erro(err)
+        }else{sucess(row)}
     })
 })
 // Lista endereço especificado via ID
@@ -102,15 +67,8 @@ app.get("enderecos-usuario/:id_endereco_usuario", function (req,res){
     var sql='select * from enderecos_usuarios where id_endereco_usuario='
     conn.query(sql+req.params.id_endereco_usuario, function(err,row){
         if(err){
-            res.json({
-                "codigo": 404,
-                "status":"erro",
-                "mensagem":"Erro"}
-                )
-        }else{res.json({
-            "codigo": 200,
-            "status":"Sucesso",
-            "mensagem":"Requisição bem sucedida."}).send(row)}
+            erro(err)
+        }else{sucess(row)}
     })
     console.log(sql2)
 })
@@ -120,43 +78,38 @@ app.delete("enderecos-usuario/:id_endereco_usuario",function(req,res){
     var sql = "delete from enderecos_usuarios where id_endereco_usuario="
     conn.query(sql+req.params.id_endereco_usuario,function(err,rows){
         if(err){
-            res.json({
-                "codigo": 404,
-                "status":"erro",
-                "mensagem":"Erro"}
-                )
-        }else{res.json({
-            "codigo": 200,
-            "status":"Sucesso",
-            "mensagem":"Requisição bem sucedida."}).send(row)}
+            erro(err)
+        }else{sucess(row)}
     })
 })
 // Adiciona novo endereço
-app.post("enderecos-usuario/:id_usuario/:logradouro/:numero/:cidade/:uf/:cep/:bairro", function(req,res){
+app.post("enderecos-usuario", function(req,res){
     let iduser=parseInt(req.body.id_usuario);let lograd=req.body.logradouro;let nmr =req.body.numero;let cidade=req.body.cidade;let uf=req.body.uf;let cep=req.body.cep;let bairro=req.body.bairro
     conn.query('INSERT INTO enderecos_usuarios(id_usuarios, logradouro, numero,cidade,uf,cep,bairro) VALUES ((SELECT id_usuario from usuarios WHERE id_usuario=?),?,?,?,?,?,?);',[iduser],[lograd],[nmr],[cidade],[uf],[cep],[bairro],function(err,row){
         if(err){
-            res.json({
-                "codigo": 404,
-                "status":"erro",
-                "mensagem":"Erro"}
-                )
-        }else{res.json({
-            "codigo": 200,
-            "status":"Sucesso",
-            "mensagem":"Requisição bem sucedida."}).send(row)}
+            erro(err)
+        }else{sucess(row)}
     })
 })
-// Envia statuscode
-app.get("/", function (req, res) {
-	res.status(200).send(
-	"Codigo:200\nStatus:Sucesso! \n Mensagem:Acao realizada com sucesso!"
-	);
-});
+app.put("enderecos-usuario/:id_endereco_usuario", function (req,res){
+    let idend = req.params.id_endereco_usuario;
+
+})
 app.listen(4242, function () {
 	console.log("Server running!");
 });
-
+function erro(err){
+    console.log({
+        "codigo": 404,
+        "status":"erro",
+        "mensagem":"Erro"}, err)
+}
+function sucess(row){
+    console.log({
+        "codigo": 200,
+        "status":"Sucesso",
+        "mensagem":"Requisição bem sucedida."}, row)
+}
 /*
 -----------------
 Teste add info 
