@@ -41,7 +41,7 @@ Após instalação e configuração, crie as seguinte tabelas no MySQL><br>
     1.4- Faça o mesmo com a tabela enderecos_usuarios
         Ex:
         INSERT INTO enderecos_usuarios(id_usuarios, logradouro, numero,cidade,uf,cep,bairro,complemento) VALUES
-        ((SELECT id_usuario from usuarios WHERE id_usuario=8),'rua nelson', '123' ,'sbc','sp','09812020','doscasa','abc');
+        ((SELECT id_usuario from usuarios WHERE id_usuario=3),'rua nelson', '123' ,'sbc','sp','09812020','doscasa','abc');
 
 2- Na pasta raiz do app, execute o comando "npm install" para instalar os pacotes.
 

@@ -1,9 +1,10 @@
 const express = require("express");
+const bodyParser = require("express");
 const conn = require("./models/db");
 const app = express();
 
 // Body parser
-app.use(express.json());
+app.use(bodyParser.json());
 // Tabela usuários.
 
 // Exibe todos usuários cadastrados
@@ -36,30 +37,36 @@ app.post("/usuarios", function (req, res) {
 	let cpf = req.body.cpf;
 	conn.query(
 		"INSERT INTO usuarios(nome, sobrenome, email,telefone,cpf) VALUES (?,?,?,?,?);",
-		[nome,sobrenome,email,telefone,cpf],function(err,row){
-		if (err) {
-			res.send(erro(err));
-		} else {
-			res.send(sucess(row));
+		[nome, sobrenome, email, telefone, cpf],
+		function (err, row) {
+			if (err) {
+				res.send(erro(err));
+			} else {
+				res.send(sucess(row));
+			}
 		}
-	});
+	);
 });
 // Add um usuario
 app.put("/usuarios/:id_usuario", function (req, res) {
-    let iduser = req.params.id_usuario
+	let iduser = req.params.id_usuario;
 	let nome = req.body.nome;
 	let sobrenome = req.body.sobrenome;
 	let email = req.body.email;
 	let telefone = req.body.telefone;
 	let cpf = req.body.cpf;
 	conn.query(
-		"UPDATE usuarios set nome=?, sobrenome=?, email=?,telefone=?,cpf=?",[nome][sobrenome][email][telefone][cpf],' WHERE id_usuario='+iduser,function(err,row){
-		if (err) {
-			res.send(erro(err));
-		} else {
-			res.send(sucess(row));
+		"UPDATE usuarios set nome=?, sobrenome=?, email=?,telefone=?,cpf=?",
+		[nome][sobrenome][email][telefone][cpf],
+		" WHERE id_usuario=" + iduser,
+		function (err, row) {
+			if (err) {
+				res.send(erro(err));
+			} else {
+				res.send(sucess(row));
+			}
 		}
-	});
+	);
 });
 // Deleta um usuário em específico, mencionado no param
 app.delete("/usuarios/:id_usuario", function (req, res) {
@@ -77,28 +84,31 @@ app.delete("/usuarios/:id_usuario", function (req, res) {
 // Lista todos endereços de um determinado usuário
 app.get("/enderecos-usuario/:idusuario", function (req, res) {
 	var idusuario = req.params.idusuario;
-    var select = "SELECT * FROM enderecos_usuarios INNER JOIN usuarios ON id_usuarios=id_usuario WHERE id_usuarios="
-	conn.query(select+idusuario,function (err, row) {
-		if (err) {
-			res.send(erro(err));
-		} else {
-			res.send(sucess(row));
-		}
-		}
-	);
-});
-// Lista endereço especificado via ID
-app.get("/enderecos-usuarios/:id_endereco_usuario", function (req, res) {
-    var idend = parseInt(req.params.id_endereco_usuario)
-	var select = "select * from enderecos_usuarios where id_endereco_usuario=";
-	conn.query('select * from enderecos_usuarios where id_endereco_usuario=?',[idend], function (err, row) {
+	var select =
+		"SELECT * FROM enderecos_usuarios INNER JOIN usuarios ON id_usuarios=id_usuario WHERE id_usuarios=";
+	conn.query(select + idusuario, function (err, row) {
 		if (err) {
 			res.send(erro(err));
 		} else {
 			res.send(sucess(row));
 		}
 	});
-	console.log(sql2);
+});
+// Lista endereço especificado via ID
+app.get("/enderecos-usuarios/:id_endereco_usuario", function (req, res) {
+	var idend = parseInt(req.params.id_endereco_usuario);
+	var select = "select * from enderecos_usuarios where id_endereco_usuario=";
+	conn.query(
+		"select * from enderecos_usuarios where id_endereco_usuario=?",
+		[idend],
+		function (err, row) {
+			if (err) {
+				res.send(erro(err));
+			} else {
+				res.send(sucess(row));
+			}
+		}
+	);
 });
 // Delete endereço especificado
 
@@ -123,13 +133,13 @@ app.post("/enderecos-usuario", function (req, res) {
 	let bairro = req.body.bairro;
 	conn.query(
 		"INSERT INTO enderecos_usuarios(id_usuarios, logradouro, numero,cidade,uf,cep,bairro) VALUES ((SELECT id_usuario from usuarios WHERE id_usuario=?),?,?,?,?,?,?);",
-		[iduser,lograd,nmr,cidade,uf,cep,bairro],
+		[iduser, lograd, nmr, cidade, uf, cep, bairro],
 		function (err, row) {
-            if (err) {
-                res.send(erro(err));
-            } else {
-                res.send(sucess(row));
-            }
+			if (err) {
+				res.send(erro(err));
+			} else {
+				res.send(sucess(row));
+			}
 		}
 	);
 });
@@ -140,13 +150,13 @@ app.put("/enderecos-usuario/:id_endereco_usuario", function (req, res) {
 		"UPDATE enderecos_usuarios SET id_usuario=?, logradouro=?,numero=?,cidade=?,uf=?,cep=?,bairro=?,complemento=?" +
 			where +
 			idend,
-		[iduser,lograd,nmr,cidade,uf,cep,bairro],
+		[iduser, lograd, nmr, cidade, uf, cep, bairro],
 		function (err, row) {
-            if (err) {
-                res.send(erro(err));
-            } else {
-                res.send(sucess(row));
-            }
+			if (err) {
+				res.send(erro(err));
+			} else {
+				res.send(sucess(row));
+			}
 		}
 	);
 });
