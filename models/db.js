@@ -57,4 +57,15 @@ Tabelas:
     INSERT INTO enderecos_usuarios(id_usuarios, logradouro, numero,cidade,uf,cep,bairro) VALUES 
     ((SELECT id_usuario from usuarios WHERE id_usuario=8),'rua','123','sp','sp','0981202','bairro');
     z
+
+    SELECT nome, email,         Seleciona com a condição CASE
+    CASE WHEN id_usuario=8 
+    THEN "Existe ID na base." 
+    ELSE "Nao encontrado" 
+    END FROM usuarios;
+
+    SELECT column_name(s) Seleciona com a condição EXISTS
+    FROM table_name
+    WHERE EXISTS
+    (SELECT column_name FROM table_name WHERE condition); 
 */
