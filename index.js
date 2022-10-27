@@ -2,9 +2,17 @@ const express = require("express");
 const bodyParser = require("express");
 const conn = require("./models/db");
 const app = express();
+const jwt = require('jsonwebtoken');
+const jwttoken = ("@n1Mseguranza")
 
 // Body parser
-app.use(bodyParser.json());
+app.use(express.json());
+
+app.post("/auth",(req,res)=>{
+	var user = req.body.senha
+	const token = jwt.sign({senha:user.senha},jwttoken,{expiresIn:"2h"})
+	res.json(token+"Token criado com sucesso")
+})
 // Tabela usuários.
 
 // Exibe todos usuários cadastrados
