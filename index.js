@@ -3,7 +3,7 @@ const bodyParser = require("express");
 const conn = require("./models/db");
 const app = express();
 const jwt = require('jsonwebtoken');
-const masterpass = ("@n1Mseguranza")
+const masterpass = ("1234")
 
 // Body parser
 app.use(express.json());
