@@ -3,16 +3,31 @@ const bodyParser = require("express");
 const conn = require("./models/db");
 const app = express();
 const jwt = require('jsonwebtoken');
-const jwttoken = ("@n1Mseguranza")
+const masterpass = ("@n1Mseguranza")
 
 // Body parser
 app.use(express.json());
 
+function auth(req,res,next){
+	const authtoken = req.headers['authorization']
+	if (authtoken != undefined){
+		jwt.verify(authtoken,masterpass,function(err,data){
+			if(data){
+				res.send(sucess(data))
+				next();
+			}else{res.status(401);res.json({err:"Não autorizado ",err})}
+		})
+	}
+}
 app.post("/auth",(req,res)=>{
 	var user = req.body.senha
-	
-	const token = jwt.sign({senha:user.senha},jwttoken,{expiresIn:"2h"})
-	res.json(token+"Token criado com sucesso")
+	const token = jwt.sign({senha:user},masterpass,{expiresIn:"20h"})
+	res.json(token)
+})
+
+app.get("/testes",auth,(req,res)=>{
+	console.log("autenticou!");
+	res.send(authtoken)
 })
 // Tabela usuários.
 
@@ -20,10 +35,8 @@ app.post("/auth",(req,res)=>{
 app.get("/usuarios", function (req, res) {
 	conn.query("SELECT * FROM usuarios", function (err, row) {
 		if (err) {
-			res.send(erro(err));
-		} else {
-			res.send(sucess(row));
-		}
+			res.json(erro(err));
+		} else {res.json(sucess(row))}
 	});
 });
 // Exibe um usuário em específico, mencionado no param
@@ -31,10 +44,8 @@ app.get("/usuarios/:id_usuario", function (req, res) {
 	var select = "SELECT * FROM usuarios where id_usuario=";
 	conn.query(select + req.params.id_usuario, function (err, row) {
 		if (err) {
-			res.send(erro(err));
-		} else {
-			res.send(sucess(row));
-		}
+			res.json(erro(err));
+		}else {res.json(sucess(row))}
 	});
 });
 // Atualiza o usuário do parametro
@@ -49,9 +60,8 @@ app.post("/usuarios", function (req, res) {
 		[nome, sobrenome, email, telefone, cpf],
 		function (err, row) {
 			if (err) {
-				res.send(erro(err));
-			} else {
-				res.send(sucess(row));
+				res.json(erro(err));
+			} else {res.json(sucess(row))
 			}
 		}
 	);
@@ -70,10 +80,8 @@ app.put("/usuarios/:id_usuario", function (req, res) {
 		" WHERE id_usuario=" + iduser,
 		function (err, row) {
 			if (err) {
-				res.send(erro(err));
-			} else {
-				res.send(sucess(row));
-			}
+				res.json(erro(err));
+			} else {res.json(sucess(row))}
 		}
 	);
 });
@@ -82,10 +90,8 @@ app.delete("/usuarios/:id_usuario", function (req, res) {
 	var del = "DELETE FROM usuarios where id_usuario=";
 	conn.query(del + req.params.id_usuario, function (err, row) {
 		if (err) {
-			res.send(erro(err));
-		} else {
-			res.send(sucess(row));
-		}
+			res.json(erro(err));
+		} else {res.json(sucess(row))}
 	});
 });
 // ------------------------------------------------------------------------
@@ -97,10 +103,8 @@ app.get("/enderecos-usuario/:idusuario", function (req, res) {
 		"SELECT * FROM enderecos_usuarios INNER JOIN usuarios ON id_usuarios=id_usuario WHERE id_usuarios=";
 	conn.query(select + idusuario, function (err, row) {
 		if (err) {
-			res.send(erro(err));
-		} else {
-			res.send(sucess(row));
-		}
+			res.json(erro(err));
+		} else {res.json(sucess(row))}
 	});
 });
 // Lista endereço especificado via ID
@@ -112,10 +116,8 @@ app.get("/enderecos-usuarios/:id_endereco_usuario", function (req, res) {
 		[idend],
 		function (err, row) {
 			if (err) {
-				res.send(erro(err));
-			} else {
-				res.send(sucess(row));
-			}
+				res.json(erro(err));
+			} else {res.json(sucess(row))}
 		}
 	);
 });
@@ -125,10 +127,8 @@ app.delete("/enderecos-usuario/:id_endereco_usuario", function (req, res) {
 	var del = "delete from enderecos_usuarios where id_endereco_usuario=";
 	conn.query(del + req.params.id_endereco_usuario, function (err, row) {
 		if (err) {
-			res.send(erro(err));
-		} else {
-			res.send(sucess(row));
-		}
+			res.json(erro(err));
+		} else {res.json(sucess(row))}
 	});
 });
 // Adiciona novo endereço
@@ -145,10 +145,8 @@ app.post("/enderecos-usuario", function (req, res) {
 		[iduser, lograd, nmr, cidade, uf, cep, bairro],
 		function (err, row) {
 			if (err) {
-				res.send(erro(err));
-			} else {
-				res.send(sucess(row));
-			}
+				res.json(erro(err));
+			}else {res.json(sucess(row))}
 		}
 	);
 });
@@ -162,10 +160,8 @@ app.put("/enderecos-usuario/:id_endereco_usuario", function (req, res) {
 		[iduser, lograd, nmr, cidade, uf, cep, bairro],
 		function (err, row) {
 			if (err) {
-				res.send(erro(err));
-			} else {
-				res.send(sucess(row));
-			}
+				res.json(erro(err));
+			}else {res.json(sucess(row))}
 		}
 	);
 });
