@@ -1,46 +1,47 @@
 const express = require("express");
-const bodyParser = require("express");
 const conn = require("./models/db");
+const bodyParser = require("express");
 const app = express();
 const jwt = require('jsonwebtoken');
 const masterpass = ("1234")
+const PORT = 80
 
 // Body parser
 app.use(express.json());
-
+// Autentica o JWT para dar acesso as rotas com Auth.
 function auth(req,res,next){
 	const authtoken = req.headers['authorization']
+	const bearer =  authtoken.split(' ');
+	var token = bearer[1];
 	if (authtoken != undefined){
-		jwt.verify(authtoken,masterpass,function(err,data){
+		jwt.verify(token,masterpass,function(err,data){
 			if(data){
-				res.send(sucess(data))
+				console.log(sucess(data))
 				next();
-			}else{res.status(401);res.json({err:"Não autorizado ",err})}
+			}else{res.status(401);res.json({err})}
 		})
 	}
 }
+// Gera um JWT
 app.post("/auth",(req,res)=>{
-	var user = req.body.senha
-	const token = jwt.sign({senha:user},masterpass,{expiresIn:"20h"})
-	res.json(token)
-})
-
-app.get("/testes",auth,(req,res)=>{
-	console.log("autenticou!");
-	res.send(authtoken)
+	let senha = req.body.senha
+	if(senha){
+		console.log(senha)
+		let token = jwt.sign({senha:senha},masterpass,{expiresIn:"6h"})
+		res.json("Bearer token "+token)
+	}else{console.log(undefined)}
 })
 // Tabela usuários.
-
 // Exibe todos usuários cadastrados
-app.get("/usuarios", function (req, res) {
+app.get("/usuarios",auth, function (req, res) {
 	conn.query("SELECT * FROM usuarios", function (err, row) {
 		if (err) {
 			res.json(erro(err));
-		} else {res.json(sucess(row))}
+		} else {res.send(sucess(row))}
 	});
 });
 // Exibe um usuário em específico, mencionado no param
-app.get("/usuarios/:id_usuario", function (req, res) {
+app.get("/usuarios/:id_usuario",auth, function (req, res) {
 	var select = "SELECT * FROM usuarios where id_usuario=";
 	conn.query(select + req.params.id_usuario, function (err, row) {
 		if (err) {
@@ -49,7 +50,7 @@ app.get("/usuarios/:id_usuario", function (req, res) {
 	});
 });
 // Atualiza o usuário do parametro
-app.post("/usuarios", function (req, res) {
+app.post("/usuarios",auth, function (req, res) {
 	let nome = req.body.nome;
 	let sobrenome = req.body.sobrenome;
 	let email = req.body.email;
@@ -67,7 +68,7 @@ app.post("/usuarios", function (req, res) {
 	);
 });
 // Add um usuario
-app.put("/usuarios/:id_usuario", function (req, res) {
+app.put("/usuarios/:id_usuario",auth, function (req, res) {
 	let iduser = req.params.id_usuario;
 	let nome = req.body.nome;
 	let sobrenome = req.body.sobrenome;
@@ -86,7 +87,7 @@ app.put("/usuarios/:id_usuario", function (req, res) {
 	);
 });
 // Deleta um usuário em específico, mencionado no param
-app.delete("/usuarios/:id_usuario", function (req, res) {
+app.delete("/usuarios/:id_usuario",auth, function (req, res) {
 	var del = "DELETE FROM usuarios where id_usuario=";
 	conn.query(del + req.params.id_usuario, function (err, row) {
 		if (err) {
@@ -97,7 +98,7 @@ app.delete("/usuarios/:id_usuario", function (req, res) {
 // ------------------------------------------------------------------------
 //                      Endereços_usuarios
 // Lista todos endereços de um determinado usuário
-app.get("/enderecos-usuario/:idusuario", function (req, res) {
+app.get("/enderecos-usuario/:idusuario",auth, function (req, res) {
 	var idusuario = req.params.idusuario;
 	var select =
 		"SELECT * FROM enderecos_usuarios INNER JOIN usuarios ON id_usuarios=id_usuario WHERE id_usuarios=";
@@ -108,7 +109,7 @@ app.get("/enderecos-usuario/:idusuario", function (req, res) {
 	});
 });
 // Lista endereço especificado via ID
-app.get("/enderecos-usuarios/:id_endereco_usuario", function (req, res) {
+app.get("/enderecos-usuarios/:id_endereco_usuario",auth, function (req, res) {
 	var idend = parseInt(req.params.id_endereco_usuario);
 	var select = "select * from enderecos_usuarios where id_endereco_usuario=";
 	conn.query(
@@ -123,7 +124,7 @@ app.get("/enderecos-usuarios/:id_endereco_usuario", function (req, res) {
 });
 // Delete endereço especificado
 
-app.delete("/enderecos-usuario/:id_endereco_usuario", function (req, res) {
+app.delete("/enderecos-usuario/:id_endereco_usuario",auth, function (req, res) {
 	var del = "delete from enderecos_usuarios where id_endereco_usuario=";
 	conn.query(del + req.params.id_endereco_usuario, function (err, row) {
 		if (err) {
@@ -132,7 +133,7 @@ app.delete("/enderecos-usuario/:id_endereco_usuario", function (req, res) {
 	});
 });
 // Adiciona novo endereço
-app.post("/enderecos-usuario", function (req, res) {
+app.post("/enderecos-usuario",auth, function (req, res) {
 	let iduser = parseInt(req.body.id_usuario);
 	let lograd = req.body.logradouro;
 	let nmr = req.body.numero;
@@ -150,7 +151,7 @@ app.post("/enderecos-usuario", function (req, res) {
 		}
 	);
 });
-app.put("/enderecos-usuario/:id_endereco_usuario", function (req, res) {
+app.put("/enderecos-usuario/:id_endereco_usuario",auth, function (req, res) {
 	let idend = req.params.id_endereco_usuario;
 	let where = "WHERE id_endereco_usuario=";
 	conn.query(
@@ -165,7 +166,7 @@ app.put("/enderecos-usuario/:id_endereco_usuario", function (req, res) {
 		}
 	);
 });
-app.listen(4242, function () {
+app.listen(PORT, function () {
 	console.log("Server running!");
 });
 function erro(err) {
