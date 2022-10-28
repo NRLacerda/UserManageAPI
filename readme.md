@@ -47,6 +47,12 @@ Após instalação e configuração, crie as seguinte tabelas no MySQL><br>
 
 3- Após isso execute o comando "node index.js" para executar a aplicação, que deve estar disponível e printar no console "Server running! Database connected" e estar disponível em "localhost:4242"
 
+4- Após rodar o aplicativo, entre na rota localhost/auth e utilizando o método POST mande uma senha no formato JSON, conforme o seguinte template>
+    {    
+    "senha": "Senha que você quiser aqui"
+    }
+5- Se tudo estiver OK, a rota deve retornar uma resposta contendo um JWT, esse do qual você deve usar para acessar as outras rotas. Na aba "Authorization" do app que você está utilizando utilize o método "Bearer Token" e insira o JWT que você recebeu. Pronto, agora você está apto a utilizar qualquer rota da API.
+
 Adicional: Fiz deploy da API numa VM na DigitalOcean, pode ser chamada através de http://68.183.98.208:4242/a-rota-aqui
 
 OBS: Caso ocorra algum erro é necessário reiniciar a aplicação assim como no passo 3.
