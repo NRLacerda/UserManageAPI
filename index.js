@@ -5,6 +5,7 @@ const app = express();
 const jwt = require('jsonwebtoken');
 const masterpass = ("1234")
 const PORT = 80
+//import {erro,authorized,sucess} from "./results"
 
 // Body parser
 app.use(express.json());
@@ -16,7 +17,7 @@ function auth(req,res,next){
 	if (authtoken != undefined){
 		jwt.verify(token,masterpass,function(err,data){
 			if(data){
-				console.log(sucess(data))
+				res.json(authorized(data))
 				next();
 			}else{res.status(401);res.json({err})}
 		})
@@ -177,6 +178,16 @@ function erro(err) {
 			mensagem: "Erro",
 		},
 		err
+	);
+}
+function authorized(data) {
+	console.log(
+		{
+			codigo: 200,
+			status: "Permitido",
+			mensagem: "Usuário autorizado.",
+		},
+		data
 	);
 }
 function sucess(row) {
