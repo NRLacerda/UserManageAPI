@@ -1,20 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Testes</title>
-</head>
-<body>
-    <h1>Testes</h1>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Testes</title>
+	</head>
+	<body>
+		<h1 id="testes">Testes</h1>
+	</body>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-        var axyosConfig = {
-            headers:{
-                Authorization:"Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZW5oYSI6InNlbmhhMTIzNCIsImlhdCI6MTY2NzQxMjUwMiwiZXhwIjoxNjY3NDM0MTAyfQ.fVaaydssjnQx1NfL6giRt4QGPVgm7i6ogUEhvS8x3CU"
+        var axiosConfig = {
+            headers: {
+                Authorization: "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZW5oYSI6InNlbmhhMTIzNCIsImlhdCI6MTY2NzQxMjUwMiwiZXhwIjoxNjY3NDM0MTAyfQ.fVaaydssjnQx1NfL6giRt4QGPVgm7i6ogUEhvS8x3CU"
             }
         }
+        
+        axios.get('http://localhost/usuarios', axiosConfig).then(res => {
+        let usuarios = res.data;
+        var userList = document.getElementById("testes");
+        usuarios.forEach(user=>{
+            var eachUser = document.createElement("li") 
+            eachUser.innerHTML = user.nome
+            userList.appendChild(eachUser);
+        })
+        });
     </script>
-</body>
 </html>

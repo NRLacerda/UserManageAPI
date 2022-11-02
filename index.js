@@ -5,6 +5,9 @@ const app = express();
 const jwt = require('jsonwebtoken');
 const masterpass = ("1234")
 const PORT = 80
+const cors = require("cors")
+// cors habilitado pra fim de desenvolvimento
+app.use(cors())
 //import {erro,authorized,sucess} from "./results"
 
 // Body parser
