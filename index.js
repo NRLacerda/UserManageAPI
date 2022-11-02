@@ -18,7 +18,6 @@ function auth(req,res,next){
 	if (authtoken != undefined){
 		jwt.verify(token,masterpass,function(err,data){
 			if(data){
-				res.json(authorized(data))
 				next();
 			}else{res.status(401).send({err})}
 		})
@@ -39,7 +38,7 @@ app.get("/usuarios",auth, function (req, res) {
 	conn.query("SELECT * FROM usuarios", function (err, row) {
 		if (err) {
 			res.status(400).send(erro(err));
-		} else {res.status(200).send(sucess(row))}
+		} else {res.send(row)}
 	});
 });
 // Exibe um usuário em específico, mencionado no param
@@ -48,7 +47,7 @@ app.get("/usuarios/:id_usuario",auth, function (req, res) {
 	conn.query(select + req.params.id_usuario, function (err, row) {
 		if (err) {
 			res.status(400).send(erro(err));
-		} else {res.status(200).send(sucess(row))}
+		} else {res.send(row)}
 	});
 });
 // Atualiza o usuário do parametro
@@ -64,7 +63,7 @@ app.post("/usuarios",auth, function (req, res) {
 		function (err, row) {
 			if (err) {
 				res.status(400).send(erro(err));
-			} else {res.status(200).send(sucess(row))}
+			} else {res.send(row)}
 		}
 	);
 });
@@ -83,7 +82,7 @@ app.put("/usuarios/:id_usuario",auth, function (req, res) {
 		function (err, row) {
 			if (err) {
 				res.status(400).send(erro(err));
-			} else {res.status(200).send(sucess(row))}
+			} else {res.send(row)}
 		}
 	);
 });
@@ -93,7 +92,7 @@ app.delete("/usuarios/:id_usuario",auth, function (req, res) {
 	conn.query(del + req.params.id_usuario, function (err, row) {
 		if (err) {
 			res.status(400).send(erro(err));
-		} else {res.status(200).send(sucess(row))}
+		} else {res.send(row)}
 	});
 });
 // ------------------------------------------------------------------------
@@ -106,7 +105,7 @@ app.get("/enderecos-usuario/:idusuario",auth, function (req, res) {
 	conn.query(select + idusuario, function (err, row) {
 		if (err) {
 			res.status(400).send(erro(err));
-		} else {res.status(200).send(sucess(row))}
+		} else {res.send(row)}
 	});
 });
 // Lista endereço especificado via ID
@@ -119,7 +118,7 @@ app.get("/enderecos-usuarios/:id_endereco_usuario",auth, function (req, res) {
 		function (err, row) {
 			if (err) {
 				res.status(400).send(erro(err));
-			} else {res.status(200).send(sucess(row))}
+			} else {res.send(row)}
 		}
 	);
 });
@@ -130,7 +129,7 @@ app.delete("/enderecos-usuario/:id_endereco_usuario",auth, function (req, res) {
 	conn.query(del + req.params.id_endereco_usuario, function (err, row) {
 		if (err) {
 			res.status(400).send(erro(err));
-		} else {res.status(200).send(sucess(row))}
+		} else {res.send(row)}
 	});
 });
 // Adiciona novo endereço
@@ -148,7 +147,7 @@ app.post("/enderecos-usuario",auth, function (req, res) {
 		function (err, row) {
 			if (err) {
 				res.status(400).send(erro(err));
-			} else {res.status(200).send(sucess(row))}
+			} else {res.send(row)}
 		}
 	);
 });
@@ -163,7 +162,7 @@ app.put("/enderecos-usuario/:id_endereco_usuario",auth, function (req, res) {
 		function (err, row) {
 			if (err) {
 				res.status(400).send(erro(err));
-			} else {res.status(200).send(sucess(row))}
+			} else {res.send(row)}
 		}
 	);
 });
