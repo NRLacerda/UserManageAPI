@@ -16,7 +16,7 @@
                 Authorization: "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZW5oYSI6InNlbmhhMTIzNCIsImlhdCI6MTY2NzQxMjUwMiwiZXhwIjoxNjY3NDM0MTAyfQ.fVaaydssjnQx1NfL6giRt4QGPVgm7i6ogUEhvS8x3CU"
             }
         }
-        
+        // faz o get dos usuarios, joga na variavel, separa e cria uma lista
         axios.get('http://localhost/usuarios', axiosConfig).then(res => {
         let usuarios = res.data;
         var userList = document.getElementById("testes");
