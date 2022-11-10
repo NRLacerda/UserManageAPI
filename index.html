@@ -9,22 +9,24 @@
 	<body>
 		<h1 id="testes">Testes</h1>
 	</body>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
-        var axiosConfig = {
-            headers: {
-                Authorization: "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZW5oYSI6InNlbmhhMTIzNCIsImlhdCI6MTY2NzQxMjUwMiwiZXhwIjoxNjY3NDM0MTAyfQ.fVaaydssjnQx1NfL6giRt4QGPVgm7i6ogUEhvS8x3CU"
-            }
-        }
-        // faz o get dos usuarios, joga na variavel, separa e cria uma lista
-        axios.get('http://localhost/usuarios', axiosConfig).then(res => {
-        let usuarios = res.data;
-        var userList = document.getElementById("testes");
-        usuarios.forEach(user=>{
-            var eachUser = document.createElement("li") 
-            eachUser.innerHTML = user.nome
-            userList.appendChild(eachUser);
-        })
-        });
-    </script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script>
+		var axiosConfig = {
+			headers: {
+				Authorization:
+					"Bearer " +
+					"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZW5oYSI6InNlbmhhMTIzIiwiaWF0IjoxNjY4MDc4NjkzLCJleHAiOjE2NjgxMDAyOTN9.52Gv01PEZ_nlqR6pzbGtWEURgjd8HBoBn8z7CUw9yVY",
+			},
+		};
+		// faz o get dos usuarios, joga na variavel, separa e cria uma lista
+		axios.get("http://localhost/usuarios", axiosConfig).then((res) => {
+			let usuarios = res.data;
+			var userList = document.getElementById("testes");
+			usuarios.forEach((user) => {
+				var eachUser = document.createElement("li");
+				eachUser.innerHTML = user.sobrenome;
+				userList.appendChild(eachUser);
+			});
+		});
+	</script>
 </html>
