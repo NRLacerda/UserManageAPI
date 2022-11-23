@@ -8,7 +8,6 @@ const PORT = 80
 const cors = require("cors")
 // cors habilitado pra fim de desenvolvimento
 app.use(cors())
-//import {erro,authorized,sucess} from "./results"
 
 // Body parser
 app.use(express.json());
@@ -60,15 +59,16 @@ app.post("/usuarios",auth, function (req, res) {
 	let email = req.body.email;
 	let telefone = req.body.telefone;
 	let cpf = req.body.cpf;
+	
 	conn.query(
-		"INSERT INTO usuarios(nome, sobrenome, email,telefone,cpf) VALUES (?,?,?,?,?);",
-		[nome, sobrenome, email, telefone, cpf],
-		function (err, row) {
-			if (err) {
-				res.status(400).send(erro(err));
-			} else {res.send(row)}
-		}
-	);
+			"INSERT IGNORE INTO usuarios(nome, sobrenome, email,telefone,cpf) VALUES (?,?,?,?,?);",
+			[nome, sobrenome, email, telefone, cpf],
+			function (err, row) {
+				if (err) {
+					res.status(400).send(erro(err));
+				} else {res.send(row)}
+			}
+		);
 });
 // Add um usuario
 app.put("/usuarios/:id_usuario",auth, function (req, res) {

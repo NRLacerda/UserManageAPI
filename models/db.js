@@ -24,7 +24,8 @@ Tabelas:
     sobrenome varchar(255) NOT NULL,
     email varchar (255) NOT NULL,
     telefone varchar (45) NOT NULL,
-    cpf varchar (45) NOT NULL
+    cpf varchar (45) NOT NULL,
+    UNIQUE KEY username (nome)
 );
     -----------
     CREATE TABLE enderecos_usuarios( 

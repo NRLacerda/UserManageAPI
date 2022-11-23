@@ -9,13 +9,14 @@ Após instalação e configuração, crie as seguinte tabelas no MySQL><br>
 
     1.1- Tabela de usuários.
 
-        CREATE TABLE usuarios(
+        CREATE TABLE usuarios( 
         id_usuario int primary key AUTO_INCREMENT,
         nome varchar(255) NOT NULL,
         sobrenome varchar(255) NOT NULL,
         email varchar (255) NOT NULL,
         telefone varchar (45) NOT NULL,
-        cpf varchar (45) NOT NULL
+        cpf varchar (45) NOT NULL,
+        UNIQUE KEY username (nome)
         );
 
     1.2- Tabela de endereços.
