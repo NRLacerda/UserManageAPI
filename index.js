@@ -59,9 +59,9 @@ app.post("/usuarios",auth, function (req, res) {
 	let email = req.body.email;
 	let telefone = req.body.telefone;
 	let cpf = req.body.cpf;
-	
+
 	conn.query(
-			"INSERT IGNORE INTO usuarios(nome, sobrenome, email,telefone,cpf) VALUES (?,?,?,?,?);",
+			"INSERT INTO usuarios(nome, sobrenome, email,telefone,cpf) VALUES (?,?,?,?,?);",
 			[nome, sobrenome, email, telefone, cpf],
 			function (err, row) {
 				if (err) {
